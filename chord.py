@@ -1,21 +1,5 @@
 from interval import Interval as I
-
-
-class Chord:
-    def __init__(self, root, intervals):
-        self.root = root
-        self.intervals = intervals
-        self.notes = self._build_chord()
-
-    def _build_chord(self):
-        notes = []
-        for interval in self.intervals:
-            note = self.root + interval
-            notes.append(note)
-        return notes
-
-    def __repr__(self):
-        return f'Chord(notes={self.notes})'
+from pitch import Pitch
 
 
 CHORD_RECIPES = {
@@ -24,15 +8,35 @@ CHORD_RECIPES = {
 }
 
 
-def get_chord(root, name):
-    if name not in CHORD_RECIPES:
-        raise ValueError(f"Chord '{name}' is not defined.")
-    intervals = CHORD_RECIPES[name]
-    return Chord(root, intervals)
+CHORD_ABBRS = {
+    'major': '',
+    'minor': 'm',
+}
+
+
+class Chord:
+    def __init__(self, root, name):
+        if isinstance(root, str):
+            root = Pitch(root)
+        self.root = root
+        self.name = name
+        self.notes = self._build_chord()
+        self.abbr = root.note + CHORD_ABBRS[name]
+
+    def _build_chord(self):
+        notes = []
+        intervals = CHORD_RECIPES[self.name]
+        for interval in intervals:
+            note = self.root + interval
+            notes.append(note)
+        return notes
+
+    def __repr__(self):
+        return f'Chord(name="{self.name}", notes={self.notes}, abbr="{self.abbr}")'
 
 
 if __name__ == "__main__":
-    from pitch import Pitch
-    root = Pitch('C3')
-    c_major = get_chord(root, 'major')
+    c_major = Chord('C3', 'major')
     print(c_major)  # Should print the notes of the C major chord
+    d_minor = Chord('D3', 'minor')
+    print(d_minor)  # Should print the notes of the D minor chord
