@@ -19,7 +19,7 @@ class Scale:
             note = note + interval
 
     def __repr__(self):
-        return f'{self.notes}'
+        return f'Scale(notes={self.notes})'
 
     def transpose(self, semitones):
         """
