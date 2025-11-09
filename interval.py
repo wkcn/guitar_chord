@@ -1,6 +1,4 @@
-from enum import Enum
-
-class Interval(Enum):
+class Interval:
     m2 = 1
     M2 = 2
     m3 = 3
