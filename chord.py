@@ -20,6 +20,7 @@ class Chord:
 
 CHORD_RECIPES = {
     'major': [I.P1, I.M3, I.P5],
+    'minor': [I.P1, I.m3, I.P5],
 }
 
 
