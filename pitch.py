@@ -2,22 +2,24 @@ import re
 
 
 class Pitch:
-    NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+    NOTE_NAMES = ['C', 'C#', 'D', 'D#', 'E',
+                  'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
     NOTE_NAME_TO_NUM = {
-        'C': 0, 'C#':1, 'Db':1,
-        'D': 2, 'D#':3, 'Eb':3,
-        'E': 4, 'Fb':4,
-        'F': 5, 'F#':6, 'Gb':6,
-        'G': 7, 'G#':8, 'Ab':8,
-        'A': 9, 'A#':10, 'Bb':10,
-        'B': 11, 'Cb':11
+        'C': 0, 'C#': 1, 'Db': 1,
+        'D': 2, 'D#': 3, 'Eb': 3,
+        'E': 4, 'Fb': 4,
+        'F': 5, 'F#': 6, 'Gb': 6,
+        'G': 7, 'G#': 8, 'Ab': 8,
+        'A': 9, 'A#': 10, 'Bb': 10,
+        'B': 11, 'Cb': 11
     }
-    NUM_TO_NAME = {v: k for k, v in NOTE_NAME_TO_NUM.items() if len(k) <= 2 and '#' in k or 'b' not in k}
+    NUM_TO_NAME = {v: k for k, v in NOTE_NAME_TO_NUM.items() if len(
+        k) <= 2 and '#' in k or 'b' not in k}
 
     def __init__(self, name):
         m = re.match(r'^([A-G](?:#|b)?)(\d+)$', name)
         if not m:
-            raise ValueError(f'Invalid pitch string: {s}')
+            raise ValueError(f'Invalid pitch string: {name}')
         note = m.group(1)
         octave = int(m.group(2))
         self.note = note
@@ -65,6 +67,8 @@ class Pitch:
         """
         降半音等同于加负数
         """
+        if isinstance(semitones, Pitch):
+            return self.to_midi() - semitones.to_midi()
         return self.transpose(-semitones)
 
 

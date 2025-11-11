@@ -31,6 +31,16 @@ class Chord:
             notes.append(note)
         return notes
 
+    def transpose(self, semitones):
+        new_root = self.root + semitones
+        return Chord(new_root, self.name)
+
+    def __add__(self, semitones):
+        return self.transpose(semitones)
+
+    def __sub__(self, semitones):
+        return self.transpose(-semitones)
+
     def __repr__(self):
         return f'Chord(name="{self.name}", notes={self.notes}, abbr="{self.abbr}")'
 

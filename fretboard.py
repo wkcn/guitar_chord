@@ -6,7 +6,8 @@ class Fretboard:
     STANDARD_TUNING = ["E2", "A2", "D3", "G3", "B3", "E4"]
 
     def __init__(self, open_strings: List[str] = None):
-        self.open_strings = [Pitch(n) for n in (open_strings or self.STANDARD_TUNING)]
+        self.open_strings = [Pitch(n) for n in (
+            open_strings or self.STANDARD_TUNING)]
 
     def get_pitch(self, string: int, fret: int) -> Pitch:
         """
